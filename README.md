@@ -2,6 +2,7 @@
 Cook Sphere
 
 ## Description
+A web app for users to create their own recipes and publish it for others to see and use. 
 
 ## Installation Instructions
 
