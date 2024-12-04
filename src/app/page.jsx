@@ -4,7 +4,7 @@ import React from 'react'
 export default function Root() {
   return (
     <main>
-      <h1>Home</h1>
+      <h1>Homepage</h1>
     </main>
   )
 }
