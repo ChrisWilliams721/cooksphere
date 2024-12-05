@@ -1,8 +1,12 @@
 import React from 'react'
+import FriendRequest from './FriendRequest'
 
-function RightMenu() {
+const RightMenu = ({userId}) => {
   return (
-    <div>RightMenu</div>
+    <div className='flex flex-col gap-6'>
+      <FriendRequest />
+      
+    </div>
   )
 }
 
