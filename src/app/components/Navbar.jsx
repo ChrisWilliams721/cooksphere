@@ -2,7 +2,14 @@ import Link from "next/link";
 import Image from "next/image";
 import React from "react";
 import MobileMenu from "./MobileMenu";
-import { ClerkLoaded, ClerkLoading, SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import {
+  ClerkLoaded,
+  ClerkLoading,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 
 function Navbar() {
   return (
@@ -53,9 +60,7 @@ function Navbar() {
         </ClerkLoading>
         <ClerkLoaded class>
           <SignedIn>
-            <div className="cursor-pointer">
-                
-            </div>
+            <div className="cursor-pointer"></div>
             <UserButton />
           </SignedIn>
           <SignedOut>
