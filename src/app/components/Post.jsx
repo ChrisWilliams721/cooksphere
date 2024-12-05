@@ -1,52 +1,32 @@
+"use client";
 import React from "react";
-import Image from "next/image";
+import { useState, useEffect } from "react";
 
 function Post() {
+  const [post, setPost] = useState([]);
+  useEffect(() => {
+    fetch("/data.json")
+      .then((res) => res.json())
+      .then((data) => setPost(data));
+  });
   return (
-    <div className="flex flex-col gap-4">
-      {/*USER*/}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Image
-            src="/avatar.png"
-            alt=""
-            width={40}
-            height={40}
-            className="w-10 h-10 object-cover rounded-full"
-          />
-          <span className="font-medium">Username</span>
-          <Image
-            src="/more.png"
-            alt=""
-            width={16}
-            height={16}
-          />
+    <div>
+      {post.map((item, index) => (
+        <div key={item.id}className="p-4 bg-white shadow-md rounded-lg flex-col gap-12 my-4">
+          <div key={index} className="">
+            <div className="flex items-center gap-4 pb-4">
+              <img
+                src={item.avatar}
+                alt={`Avatar for ${item.username}`}
+                className="w-12 h-12 object-cover rounded-full"
+              />
+              <h3>{item.username}</h3>
+            </div>
+            <img src={item.image} alt={`Image for ${item.username}`} />
+            <p className="pt-4">{item.recipe}</p>
+          </div>
         </div>
-      </div>
-      {/*DESC*/}
-      <div className="flex flex-col gap-4">
-        <div className="w-full min-h-96 relative">
-        <Image
-            src="/pancakes.png"
-            alt=""
-            fill
-            className="object-cover rounded-md"
-          />
-        </div>
-        <p>
-            Recipe for fluffy pancakes:
-            1 cup all-purpose flour
-            2 tablespoons sugar
-            2 teaspoons baking powder
-            1/4 teaspoon salt
-            1 cup milk
-            1 large egg
-            2 tablespoons butter, melted
-            1 teaspoon vanilla extract
-        </p>
-      </div>
-      {/*INTERACTION*/}
-      <div className=""></div>
+      ))}
     </div>
   );
 }

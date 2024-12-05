@@ -1,14 +1,16 @@
-import React from 'react'
-import Post from './Post'
+import React from "react";
+import Image from "next/image";
+import Post from "./Post";
 
 function Feed() {
   return (
-    <div className='p-4 bg-white shawdow-md rounded-lg flex-col gap-12'>
-        <Post/>
-        <Post/>
-        <Post/>
+    <div className="flex flex-col gap-4">
+      {/*POST*/}
+      <Post/>
+      {/*INTERACTION*/}
+      <div className="flex items-center"></div>
     </div>
-  )
+  );
 }
 
-export default Feed
+export default Feed;

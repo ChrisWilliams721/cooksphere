@@ -3,7 +3,7 @@ import React from 'react'
 import LeftMenu from './components/LeftMenu'
 import RightMenu from './components/RightMenu'
 import AddPost from './components/AddPost'
-import PostFeed from './components/Feed'
+import PostFeed from './components/Post'
 
 export default function Root() {
   return (
