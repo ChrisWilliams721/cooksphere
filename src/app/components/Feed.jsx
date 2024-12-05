@@ -8,7 +8,6 @@ function Feed() {
       {/*POST*/}
       <Post/>
       {/*INTERACTION*/}
-      <div className="flex items-center"></div>
     </div>
   );
 }
