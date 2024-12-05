@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
+
 function Comments() {
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    // Fetch the JSON file
+    fetch("/comments.json")
+      .then((response) => response.json())
+      .then((data) => setComments(data))
+      .catch((error) => console.error("Error loading comments:", error));
+  }, []);
+
   return (
     <div className="pt-4">
-      {/*WRITE A COMMENT*/}
+      {/* WRITE A COMMENT */}
       <div className="flex items-center gap-4">
         <Image
           src="/chef2.png"
@@ -27,50 +38,46 @@ function Comments() {
           />
         </div>
       </div>
-      {/*COMMENTS*/}
-      <div className="flex items-center gap-4">
-        {/*COMMENT*/}
-        <div className="flex gap-4 justify-between mt-6">
-          {/*AVATAR*/}
+
+      {/* COMMENTS */}
+      {comments.map((comment) => (
+        <div key={comment.id} className="flex items-center gap-4 mt-6">
+          {/* AVATAR */}
           <Image
-            src="/chef2.png"
-            alt=""
+            src={comment.avatar}
+            alt={comment.username}
             width={40}
             height={40}
             className="w-8 h-8 object-cover rounded-full"
           />
-        </div>
-        {/*DESCRIPTION*/}
-        <div className="flex flex-col gap-2 flex-1">
-          <span className="font-medium">chris</span>
-          <p className="text-sm">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque,
-            quas.
-          </p>
-          <div className="flex items-center gap-8 text-sm text-gray-500 mt-2">
-            <div className="flex items-center gap-4">
-              <Image
-                src="/like.png"
-                alt="like"
-                width={12}
-                height={12}
-                className="w-4 h-4 cursor-pointer"
-              />
+          {/* DESCRIPTION */}
+          <div className="flex flex-col gap-2 flex-1">
+            <span className="font-medium">{comment.username}</span>
+            <p className="text-sm">{comment.text}</p>
+            <div className="flex items-center gap-8 text-sm text-gray-500 mt-2">
+              <div className="flex items-center gap-4">
+                <Image
+                  src="/like.png"
+                  alt="like"
+                  width={12}
+                  height={12}
+                  className="w-4 h-4 cursor-pointer"
+                />
+                <span>{comment.likes}</span>
+              </div>
+              <div>Reply</div>
             </div>
-            <div>Reply</div>
           </div>
-        </div>
-        <div>
-          {/*ICON*/}
+          {/* ICON */}
           <Image
             src="/more.png"
-            alt=""
+            alt="Options"
             width={16}
             height={16}
             className="w-4 h-4 cursor-pointer"
           />
         </div>
-      </div>
+      ))}
     </div>
   );
 }
