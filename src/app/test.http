@@ -1,0 +1,2 @@
+// CREATE TABLE
+POST http://localhost:3000/src/app/api/tables 

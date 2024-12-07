@@ -11,6 +11,7 @@
   "dependencies": {
     "@clerk/clerk-js": "^5.37.0",
     "@clerk/nextjs": "^6.6.0",
+    "@neondatabase/serverless": "^0.10.4",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106"
