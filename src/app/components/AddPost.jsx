@@ -6,7 +6,7 @@ function AddPost() {
     <div className="p-4 bg-white shawdow-md rounded-lg flex gap-4 justify-between text-sm">
       {/*AVATAR*/}
       <Image
-        src="/avatar.png"
+        src="/user-image.jpg"
         alt=""
         width={40}
         height={40}
