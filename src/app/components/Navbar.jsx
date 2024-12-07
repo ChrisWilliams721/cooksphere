@@ -2,7 +2,14 @@ import Link from "next/link";
 import Image from "next/image";
 import React from "react";
 import MobileMenu from "./MobileMenu";
-import { ClerkLoaded, ClerkLoading, SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import {
+  ClerkLoaded,
+  ClerkLoading,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 
 function Navbar() {
   return (
@@ -43,19 +50,17 @@ function Navbar() {
       <div className="w-[30%] flex items-center justify-center gap-2 text-sm  ">
         <ClerkLoading>
           <div
-            class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
+            className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
             role="status"
           >
-            <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+            <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
               Loading...
             </span>
           </div>
         </ClerkLoading>
-        <ClerkLoaded class>
+        <ClerkLoaded >
           <SignedIn>
-            <div className="cursor-pointer">
-                
-            </div>
+            <div className="cursor-pointer"></div>
             <UserButton />
           </SignedIn>
           <SignedOut>
