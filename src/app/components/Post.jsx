@@ -10,7 +10,7 @@ function Post() {
     fetch("/data.json")
       .then((res) => res.json())
       .then((data) => setPost(data));
-  });
+  }, []);
   return (
     <div>
       {post.map((item, index) => (
