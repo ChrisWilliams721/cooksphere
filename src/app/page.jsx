@@ -1,9 +1,11 @@
+"use client";
 import Link from 'next/link'
 import React from 'react'
 import LeftMenu from './components/LeftMenu'
 import RightMenu from './components/RightMenu'
 import AddPost from './components/AddPost'
 import PostFeed from './components/Post'
+import ProfilePage from './profile/[id]/page';
 
 export default function Root() {
   return (
@@ -13,6 +15,7 @@ export default function Root() {
         <div className='flex flex-col gap-6'>
           <AddPost />
           <PostFeed />
+          
         </div>
       </div>
       <div className='hidden lg:block w-[30%]'><RightMenu /></div>
