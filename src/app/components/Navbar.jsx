@@ -22,7 +22,7 @@ function Navbar() {
         {user ? (
           <>
             <Image
-              src={user.photoURL || "/default-avatar.png"}
+              src={user.photoURL }
               alt="User Avatar"
               width={32}
               height={32}

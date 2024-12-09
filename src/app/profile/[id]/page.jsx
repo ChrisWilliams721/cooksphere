@@ -55,7 +55,7 @@ const ProfilePage = () => {
                 className="rounded-md object-cover"
               />
               <Image
-                src={user.photoURL}
+                src={user.photoURL || "/user.png"}
                 alt="Profile"
                 width={128}
                 height={128}
