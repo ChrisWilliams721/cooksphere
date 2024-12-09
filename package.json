@@ -9,8 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/clerk-js": "^5.37.0",
-    "@clerk/nextjs": "^6.6.0",
     "@neondatabase/serverless": "^0.10.4",
     "encoding": "^0.1.13",
     "firebase": "^11.0.2",

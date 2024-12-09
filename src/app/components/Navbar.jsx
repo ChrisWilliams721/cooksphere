@@ -22,15 +22,15 @@ function Navbar() {
         {user ? (
           <>
             <Image
-              src={user.photoURL }
+              src={user.photoURL ? user.photoURL : undefined}
               alt="User Avatar"
               width={32}
               height={32}
               className="rounded-full"
             />
-            <Link onClick={firebaseSignOut} className="text-red-600" href={"/"}>
+            <button onClick={firebaseSignOut} className="text-red-600">
               logout
-            </Link>
+            </button>
           </>
         ) : (
           <Link href="/" className="text-blue-500">

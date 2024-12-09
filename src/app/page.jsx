@@ -19,7 +19,7 @@ export default function Root() {
       await gitHubSignIn();
       router.push("/"); // Redirect to the homepage after signing in
     } catch (error) {
-      console.error("Error signing in: ", error);
+      console.error(error);
     }
   };
 
