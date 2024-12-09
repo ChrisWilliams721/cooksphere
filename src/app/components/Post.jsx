@@ -1,80 +1,51 @@
-"use client";
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useUserAuth } from "../_utils/auth-context";
+import { getAllPosts } from "../_services/posts-service";
 import Image from "next/image";
-import Comments from "./Comments";
-
 function Post() {
-  const [post, setPost] = useState([]);
+  const [posts, setPosts] = useState([]);  // Initialize with an empty array
+  const { user } = useUserAuth();
+
   useEffect(() => {
-    fetch("/data.json")
-      .then((res) => res.json())
-      .then((data) => setPost(data));
-  });
+    const fetchPosts = async () => {
+      try {
+        const fetchedPosts = await getAllPosts();  // Fetch all posts
+        setPosts(fetchedPosts);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
+    if (user) {
+      fetchPosts();  // Only fetch posts if user is authenticated
+    }
+  }, [user]);  // Rerun effect if user changes
+
+  const formatDate = (timestamp) => {
+    if (timestamp) {
+      const date = timestamp.toDate(); // Convert Firestore Timestamp to Date
+      return date.toLocaleDateString(); // Format date as you wish
+    }
+    return "Unknown date";
+  };
+  console.log("Posts:", posts);
   return (
-    <div>
-      {post.map((item, index) => (
-        <div
-          key={item.id}
-          className="p-4 bg-white shadow-md rounded-lg flex-col gap-12 my-4"
-        >
-          <div key={index} className="">
-            <div className="flex items-center gap-4 pb-4">
-              <img
-                src={item.avatar}
-                alt={`Avatar for ${item.username}`}
-                className="w-12 h-12 object-cover rounded-full"
-              />
-              <h3>{item.username}</h3>
-              <img
-                src="/more.png"
-                alt="more"
-                width={16}
-                height={16}
-                className="cursor-pointer"
-              />
+    <div className="flex flex-col gap-4">
+      {posts.length > 0 ? (
+        posts.map((post) => (
+          <div
+            key={post.id}
+            className="p-4 bg-white shadow-md rounded-lg text-sm flex flex-col gap-4"
+          >
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-gray-400">{formatDate(post.createdAt)}</span>
             </div>
-            <img src={item.image} alt={`Image for ${item.username}`} />
-            <p className="pt-4">{item.recipe}</p>
+            <p>{post.content}</p>
           </div>
-          <div className="flex gap-8 pt-4">
-            <div className="flex items-center gap-4 bg-slate-100 p-2 rounded-xl">
-              <Image
-                src="/like.png"
-                alt="like"
-                width={16}
-                height={16}
-                className="cursor-pointer"
-              />
-              <span className="text-gray-300">|</span>
-              <span className="text-gray-600">{item.likes}</span>
-            </div>
-            <div className="flex items-center gap-4 bg-slate-100 p-2 rounded-xl">
-              <Image
-                src="/comment.png"
-                alt="comment"
-                width={16}
-                height={16}
-                className="cursor-pointer"
-              />
-              <span className="text-gray-300">|</span>
-              <span className="text-gray-600">{item.comments}</span>
-            </div>
-            <div className="flex items-center gap-4 bg-slate-100 p-2 rounded-xl">
-              <Image
-                src="/shares.png"
-                alt="shares"
-                width={16}
-                height={16}
-                className="cursor-pointer"
-              />
-              <span className="text-gray-300">|</span>
-              <span className="text-gray-600">{item.shares}</span>
-            </div>
-          </div>
-          <Comments />
-        </div>
-      ))}
+        ))
+      ) : (
+        <p>No posts available</p> // Display a message if there are no posts
+      )}
     </div>
   );
 }
