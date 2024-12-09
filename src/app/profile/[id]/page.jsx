@@ -1,10 +1,43 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import LeftMenu from "../../components/LeftMenu";
 import RightMenu from "../../components/RightMenu";
-import Post from "../../components/Post";
 import Image from "next/image";
+import { getFeedPosts } from "../../_services/posts-service";
+import { useUserAuth } from "../../_utils/auth-context";
 
 const ProfilePage = () => {
+  const { user } = useUserAuth();
+  const [posts, setPosts] = useState([]);
+  const [followers, setFollowers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      if (user) {
+        try {
+          const userPosts = await getFeedPosts(user.uid); // Fetch posts for the logged-in user
+          setPosts(userPosts);
+        } catch (error) {
+          console.error("Error fetching posts:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchPosts();
+  }, [user]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (posts.length === 0) {
+    return <p>No posts yet. Create your first post!</p>;
+  }
+  console.log(user);
+
   return (
     <div className="flex gap-6 pt-6">
       <div className="hidden xl:block w-[20%]">
@@ -22,21 +55,23 @@ const ProfilePage = () => {
                 className="rounded-md object-cover"
               />
               <Image
-                src="/user-image.jpg"
+                src={user.photoURL}
                 alt="Profile"
                 width={128}
                 height={128}
                 className="w-32 h-32 rounded-full absolute left-0 right-0 m-auto -bottom-16 ring-4 ring-white object-cover"
               />
             </div>
-            <h1 className="mt-20 mb-4 text-2xl font-medium">Tony Paul</h1>
+            <h1 className="mt-20 mb-4 text-2xl font-medium">
+              {user.email}
+            </h1>
             <div className="flex items-center justify-center gap-12 mb-4">
               <div className="flex flex-col items-center">
-                <span className="font-medium">123</span>
+                <span className="font-medium">{posts.length}</span>
                 <span className="text-sm">Posts</span>
               </div>
               <div className="flex flex-col items-center">
-                <span className="font-medium">2.8k</span>
+                <span className="font-medium">{followers.length}</span>
                 <span className="text-sm">Followers</span>
               </div>
               <div className="flex flex-col items-center">
@@ -45,7 +80,17 @@ const ProfilePage = () => {
               </div>
             </div>
           </div>
-          <Post />
+          {/* POSTS */}
+          <div className="flex flex-col gap-4">
+            {posts.map((post) => (
+              <div
+                key={post.id}
+                className="p-4 bg-white shadow-md rounded-lg my-4"
+              >
+                <p className="text-gray-800">{post.content}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <div className="hidden lg:block w-[30%]">
