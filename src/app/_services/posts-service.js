@@ -14,12 +14,12 @@ import { db } from "../_utils/firebase";
 
 //add Post
 
-export const addFeedPost = async (userId, content) => {
+export const addFeedPost = async (userId, content, createdAt) => { //Added
   try {
-    await addDoc(collection(db, `users/${userId}/posts`), {
+    await addDoc(collection(db, "posts"), {
+      userId,
       content,
-      createdAt: serverTimestamp(),
-      likes: 0,
+      createdAt: createdAt || serverTimestamp(),
     });
     console.log("Post created successfully!");
   } catch (error) {
@@ -30,38 +30,20 @@ export const addFeedPost = async (userId, content) => {
 //Get Posts
 export const getFeedPosts = async (userId) => {
   try {
-    const postCollectionRef = collection(db, `users/${userId}/posts`);
+    const postCollectionRef = collection(db, "posts");
     const postSnapshot = await getDocs(postCollectionRef);
     const mappedPosts = postSnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
-    }));
-    return mappedPosts;
+    }))
+
+    const filteredPosts = mappedPosts.filter((post) => post.userId === userId);
+    return filteredPosts;
   } catch (error) {
     console.error("Error getting documents: ", error);
   }
 };
-
-//Get Post
-export const getFeedPost = async (userId, postId) => {
-  try {
-    const postDocRef = doc(db, `users/${userId}/posts`, postId);
-    const postSnapshot = await getDoc(postDocRef);
-
-    if (postSnapshot.exists()) {
-      const postData = {
-        id: postSnapshot.id,
-        ...postSnapshot.data(),
-      };
-      return postData;
-    } else {
-      return null;
-    }
-  } catch (error) {
-    console.error("Error getting document: ", error);
-  }
-};
-export const getAllPosts = async () => {
+export const getAllPosts = async () => { //Added
   try {
     const postsRef = collection(db, "posts"); // Global posts collection
     const postSnapshot = await getDocs(postsRef);

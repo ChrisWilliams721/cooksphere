@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useUserAuth } from "../_utils/auth-context";
 import { getAllPosts } from "../_services/posts-service";
+import Image from "next/image";
 function Post() {
   const [posts, setPosts] = useState([]);  // Initialize with an empty array
   const { user } = useUserAuth();

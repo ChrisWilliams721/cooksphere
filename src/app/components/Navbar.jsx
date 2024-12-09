@@ -28,12 +28,12 @@ function Navbar() {
               height={32}
               className="rounded-full"
             />
-            <Link onClick={firebaseSignOut} className="text-red-600" href={"signin"}>
+            <Link onClick={firebaseSignOut} className="text-red-600" href={"/"}>
               logout
             </Link>
           </>
         ) : (
-          <Link href="/signin" className="text-blue-500">
+          <Link href="/" className="text-blue-500">
             Login
           </Link>
         )}
