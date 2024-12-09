@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import LeftMenu from "../../components/LeftMenu";
 import RightMenu from "../../components/RightMenu";
 import Image from "next/image";
-import { getFeedPosts } from "../../_services/posts-service";
+import { getFeedPosts, deletePost } from "../../_services/posts-service";
 import { useUserAuth } from "../../_utils/auth-context";
 
 const ProfilePage = () => {
@@ -28,6 +28,15 @@ const ProfilePage = () => {
 
     fetchPosts();
   }, [user]);
+
+  const handleDeletePost = async (postId) => {
+    try {
+      await deletePost(postId);
+      setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
+  };
 
   if (loading) {
     return <p>Loading...</p>;
@@ -62,9 +71,7 @@ const ProfilePage = () => {
                 className="w-32 h-32 rounded-full absolute left-0 right-0 m-auto -bottom-16 ring-4 ring-white object-cover"
               />
             </div>
-            <h1 className="mt-20 mb-4 text-2xl font-medium">
-              {user.email}
-            </h1>
+            <h1 className="mt-20 mb-4 text-2xl font-medium">{user.email}</h1>
             <div className="flex items-center justify-center gap-12 mb-4">
               <div className="flex flex-col items-center">
                 <span className="font-medium">{posts.length}</span>
@@ -88,6 +95,14 @@ const ProfilePage = () => {
                 className="p-4 bg-white shadow-md rounded-lg my-4"
               >
                 <p className="text-gray-800">{post.content}</p>
+                <div>
+                  <button
+                    onClick={() => handleDeletePost(post.id)}
+                    className="bg-red-500 text-white py-2 px-4 rounded text-sm"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             ))}
           </div>

@@ -56,3 +56,11 @@ export const getAllPosts = async () => { //Added
     console.error("Error fetching posts:", error);
   }
 };
+export const deletePost = async (postId) => {
+  try {
+    await deleteDoc(doc(db, "posts", postId));
+    console.log("Post deleted successfully!");
+  } catch (error) {
+    console.error("Error deleting post: ", error);
+  }
+}
